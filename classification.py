@@ -104,3 +104,18 @@ else:
     st.write(f'Accuracy: {accuracy:.2f}')
     st.text('Classification Report:')
     st.text(classification_report(y_test, y_pred))
+
+     # Prediction
+    st.header('Prediksi Data Baru')
+
+    # Input fields for prediction
+    age_input = st.number_input('Masukkan Umur (Age)', min_value=0, max_value=100, value=25)
+    na_to_k_input = st.number_input('Masukkan Rasio Na to K', min_value=0.0, max_value=30.0, value=15.0)
+
+    # Predict button
+    if st.button('Prediksi'):
+        input_data = pd.DataFrame([[age_input, na_to_k_input]], columns=['Age', 'Na_to_K'])
+        prediction = classifier.predict(input_data)
+
+        # Display result
+        st.write(f'Prediksi: {prediction[0]}')
