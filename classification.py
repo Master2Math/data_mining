@@ -10,6 +10,15 @@ import io
 # Load dataset
 st.title('Klasifikasi Data dengan Random Forest')
 
+# Sidebar
+st.sidebar.header('Informasi Pasien')
+
+age_input = st.sidebar.slider('Umur', 15, 75, 50)
+gender_input = st.sidebar.selectbox('Kelamin', ['Female', 'Male'])
+blood_pressure_input = st.sidebar.selectbox('Tekanan Darah', ['LOW', 'NORMAL', 'HIGH'])
+cholesterol_input = st.sidebar.selectbox('Cholesterol', ['NORMAL', 'HIGH'])
+na_to_k_input = st.sidebar.slider('Na_to_K', 5.0, 40.0, 15.0)
+
 with st.expander("Dataset"):
     data = pd.read_csv("Classification.csv")
     st.write(data)
@@ -22,7 +31,6 @@ with st.expander("Dataset"):
     
     st.success('Analisa Univariat')
     deskriptif = data.describe()
-
     st.write(deskriptif)
 
 # Pastikan nama kolom tidak memiliki spasi tersembunyi
@@ -42,12 +50,14 @@ else:
         fig, ax = plt.subplots()
         sns.histplot(data['Age'], color='blue', kde=True)
         plt.xlabel('Age')
+        plt.ylabel('Jumlah')
         st.pyplot(fig)
 
         # Histogram Na_to_K
         fig, ax = plt.subplots()
         sns.histplot(data['Na_to_K'], color='red', kde=True)
         plt.xlabel('Na_to_K')
+        plt.ylabel('Jumlah')
         st.pyplot(fig)
 
         st.info('Korelasi Heatmap')
@@ -57,7 +67,7 @@ else:
         sns.heatmap(matriks_korelasi, annot=True, cmap='RdBu', fmt='.2f')
         plt.xticks(fontsize=8)
         plt.yticks(fontsize=8)
-        plt.title('Korelasi Antar Fitur Angka', fontsize=10)
+        plt.title('Korelasi Umur Terhadap N-K', fontsize=10)
         st.pyplot(fig)
 
         def plot_outlier(data, column):
@@ -67,6 +77,7 @@ else:
 
             sns.histplot(data[column], kde=True, ax=axes[1])
             axes[1].set_title(f'{column} - Histogram')
+            plt.ylabel('Jumlah')
             st.pyplot(fig)
 
         # Deteksi outlier untuk Age dan Na_to_K
@@ -107,10 +118,6 @@ else:
 
      # Prediction
     st.header('Prediksi Data Baru')
-
-    # Input fields for prediction
-    age_input = st.number_input('Masukkan Umur (Age)', min_value=0, max_value=100, value=25)
-    na_to_k_input = st.number_input('Masukkan Rasio Na to K', min_value=0.0, max_value=30.0, value=15.0)
 
     # Predict button
     if st.button('Prediksi'):
