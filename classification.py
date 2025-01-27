@@ -70,6 +70,30 @@ else:
         plt.title('Korelasi Umur Terhadap N-K', fontsize=10)
         st.pyplot(fig)
 
+        # Sex Distribution
+        st.info('Sex Distribution')
+        fig, ax = plt.subplots()
+        sns.countplot(x=data['Sex'], palette='pastel')
+        plt.xlabel('Jenis Kelamin')
+        plt.ylabel('Jumlah')
+        st.pyplot(fig)
+
+        # Blood Pressure Distribution
+        st.info('Blood Pressure Distribution')
+        fig, ax = plt.subplots()
+        sns.countplot(x=data['BP'], palette='pastel')
+        plt.xlabel('Tekanan Darah')
+        plt.ylabel('Jumlah')
+        st.pyplot(fig)
+
+        # Cholesterol Distribution
+        st.info('Cholesterol Distribution')
+        fig, ax = plt.subplots()
+        sns.countplot(x=data['Cholesterol'], palette='pastel')
+        plt.xlabel('Cholesterol')
+        plt.ylabel('Jumlah')
+        st.pyplot(fig)
+
         def plot_outlier(data, column):
             fig, axes = plt.subplots(1, 2, figsize=(12, 5))
             sns.boxplot(y=data[column], ax=axes[0])
